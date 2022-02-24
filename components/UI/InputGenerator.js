@@ -6,8 +6,10 @@ import {
   IconButton,
   Icon,
   WarningOutlineIcon,
+  Select,
+  CheckIcon,
 } from "native-base";
-import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import * as colors from "../../constants/color";
 
@@ -35,6 +37,7 @@ export default InputGenerator = (props) => {
   const [error, setError] = useState();
 
   const iconColor = useColorModeValue(colors.light.border, colors.dark.border);
+  const selectBg = useColorModeValue(colors.light.body, colors.dark.card);
 
   const focusColor = useColorModeValue(
     colors.light.primary,
@@ -109,6 +112,72 @@ export default InputGenerator = (props) => {
 
   let inputElement;
   switch (props.inputType) {
+    case "select-month":
+      let mOptions = [
+        { label: "Januari", value: "01" },
+        { label: "Februari", value: "02" },
+        { label: "Maret", value: "03" },
+        { label: "April", value: "04" },
+        { label: "Mei", value: "05" },
+        { label: "Juni", value: "06" },
+        { label: "Juli", value: "07" },
+        { label: "Agustus", value: "08" },
+        { label: "September", value: "09" },
+        { label: "Oktober", value: "10" },
+        { label: "November", value: "11" },
+        { label: "Desember", value: "12" },
+      ];
+      inputElement = (
+        <Select
+          selectedValue={inputState.value}
+          accessibilityLabel={props.placeholder}
+          placeholder={props.placeholder}
+          _selectedItem={{
+            bg: colors.light.secondary,
+            endIcon: <CheckIcon size={5} />,
+          }}
+          borderColor={colors.light.secondary}
+          onValueChange={textChangeHandler}
+        >
+          {mOptions &&
+            mOptions.map((option) => (
+              <Select.Item
+                label={option.label}
+                value={option.value}
+                key={option.value}
+              />
+            ))}
+        </Select>
+      );
+      break;
+    case "select-year":
+      let yOptions = [];
+      for (let i = 2022; i <= new Date().getFullYear(); i++) {
+        yOptions.push({ label: "" + i, value: "" + i });
+      }
+      inputElement = (
+        <Select
+          selectedValue={inputState.value}
+          accessibilityLabel={props.placeholder}
+          placeholder={props.placeholder}
+          _selectedItem={{
+            bg: colors.light.secondary,
+            endIcon: <CheckIcon size={5} />,
+          }}
+          borderColor={colors.light.secondary}
+          onValueChange={textChangeHandler}
+        >
+          {yOptions &&
+            yOptions.map((option) => (
+              <Select.Item
+                label={option.label}
+                value={option.value}
+                key={option.value}
+              />
+            ))}
+        </Select>
+      );
+      break;
     case "password":
       inputElement = (
         <Input

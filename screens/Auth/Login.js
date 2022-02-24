@@ -1,7 +1,7 @@
 import React, { useReducer, useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Keyboard, StyleSheet } from "react-native";
-import { Image, View, Text } from "native-base";
+import { Keyboard, Dimensions } from "react-native";
+import { Image, View, Text, useColorModeValue } from "native-base";
 import HideWithKeyboard from "react-native-hide-with-keyboard";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -17,6 +17,8 @@ import { FORM_UPDATE, formReducer } from "../../utils/formReducer";
 import { login } from "../../store/actions/auth";
 import * as colors from "../../constants/color";
 
+const HEIGHT = Dimensions.get("window").height;
+
 const Login = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.authLoader.loginLoading);
@@ -26,14 +28,14 @@ const Login = () => {
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
-      username: null,
-      password: null,
+      username: "superuser",
+      password: "janxploit",
     },
     inputValidities: {
-      username: false,
-      password: false,
+      username: true,
+      password: true,
     },
-    formIsValid: false,
+    formIsValid: true,
   });
 
   const inputChangeHandler = useCallback(
@@ -55,45 +57,62 @@ const Login = () => {
     );
   };
 
+  const loadingGradient1 = useColorModeValue(
+    colors.light.loginGradient1,
+    colors.dark.loginGradient1
+  );
+
+  const loadingGradient2 = useColorModeValue(
+    colors.light.loginGradient2,
+    colors.dark.loginGradient2
+  );
+
   return (
     <>
       <StatusBar />
       <ColorModeWrapper>
         <View
           w="100%"
-          h="25%"
+          h={HEIGHT * 0.25}
           alignItems="center"
           style={{
             justifyContent: "center",
           }}
         >
           <LinearGradient
-            colors={["rgba(243,146,0,0.8)", "rgba(243,146,0,0)"]}
-            style={styles.Overlay}
+            colors={[loadingGradient1, loadingGradient2]}
+            style={{
+              position: "absolute",
+              top: 0,
+              width: "100%",
+              height: "100%",
+              paddingLeft: 20,
+              paddingTop: 80,
+            }}
           ></LinearGradient>
           <Image w="100%" source={KeyIcon} alt="Alternate Text" size="sm" />
-          <Text style={{ color: colors.light.border }}>LOGIN</Text>
+          <Text>LOGIN</Text>
         </View>
 
         <View
           w="100%"
-          h="75%"
+          h={HEIGHT * 0.75}
           alignItems="center"
           style={{
-            backgroundColor: "#fff",
+            borderColor: colors.light.secondary,
+            borderWidth: 1,
             borderTopRightRadius: 30,
             borderTopLeftRadius: 30,
           }}
           px={5}
         >
           <View w="100%" mt={5} alignItems="center">
-            <Text style={{ color: colors.light.border }} mb={5} fontSize="md">
+            <Text mb={5} fontSize="md">
               <Text bold>PT. Kimia Farma Tbk.</Text> Plant Jakarta
             </Text>
 
             <Input
               id="username"
-              placeholder="Username"
               label="Username"
               variant="filled"
               isRequired={true}
@@ -104,7 +123,6 @@ const Login = () => {
 
             <Input
               id="password"
-              placeholder="*****"
               label="Password"
               inputType="password"
               isRequired={true}
@@ -121,7 +139,7 @@ const Login = () => {
               size="lg"
               isDisabled={!formState.formIsValid}
               isLoading={loading}
-              isLoadingText="loading.."
+              isLoadingText="Loading.."
               onPress={loginSubmitHandler}
             >
               Login
@@ -131,7 +149,7 @@ const Login = () => {
           <HideWithKeyboard
             style={{
               position: "absolute",
-              bottom: 0,
+              bottom: 15,
               backgroundColor: "transparent",
               justifyContent: "center",
             }}
@@ -146,16 +164,5 @@ const Login = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  Overlay: {
-    position: "absolute",
-    top: 0,
-    width: "100%",
-    height: "100%",
-    paddingLeft: 20,
-    paddingTop: 80,
-  },
-});
 
 export default Login;

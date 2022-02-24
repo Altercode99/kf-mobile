@@ -24,13 +24,15 @@ export default function App() {
 
   if (!fontLoaded) {
     return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => {
-          setFontLoaded(true);
-        }}
-        onError={console.warn}
-      />
+      <>
+        <AppLoading
+          startAsync={fetchFonts}
+          onFinish={() => {
+            setFontLoaded(true);
+          }}
+          onError={console.warn}
+        />
+      </>
     );
   }
 
