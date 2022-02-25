@@ -60,21 +60,11 @@ const Absen = ({ navigation }) => {
           >
             Absen Masuk
           </ButtonIcon>
-          <Text>--OR--</Text>
-          <ButtonIcon
-            w={200}
-            as={SimpleLineIcons}
-            name="logout"
-            type="secondary"
-            onPress={() => navigation.navigate("Scanner", { action: "OUT" })}
-          >
-            Absen Pulang
-          </ButtonIcon>
         </Center>
       );
     } else if (currentAbsen) {
       absen = (
-        <View flex={1} px={5}>
+        <View flex={1} px={2}>
           <View
             mt={5}
             w="100%"

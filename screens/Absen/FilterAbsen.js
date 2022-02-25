@@ -1,4 +1,5 @@
-import React, { useReducer, useCallback, useState, CheckIcon } from "react";
+import React, { useReducer, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { View } from "native-base";
 import { withNavigationFocus } from "react-navigation";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -7,19 +8,23 @@ import Screen from "../../components/View/Screen1";
 import Input from "../../components/UI/InputGenerator";
 import ButtonIcon from "../../components/UI/ButtonIcon";
 
+import { FILTER_ABSEN } from "../../store/actions/absen";
+
 import { FORM_UPDATE, formReducer } from "../../utils/formReducer";
 
 const FilterAbsen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.absenLoader.filterLoading);
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       year: null,
       month: null,
     },
     inputValidities: {
-      year: true,
-      month: true,
+      year: false,
+      month: false,
     },
-    formIsValid: true,
+    formIsValid: false,
   });
 
   const inputChangeHandler = useCallback(
@@ -33,6 +38,17 @@ const FilterAbsen = ({ navigation }) => {
     },
     [dispatchFormState]
   );
+
+  const setFilterHandler = () => {
+    dispatch({ type: "FILTER_START" });
+    dispatch({
+      type: FILTER_ABSEN,
+      month: formState.inputValues.month,
+      year: formState.inputValues.year,
+    });
+    dispatch({ type: "FILTER_SUCCESS" });
+    navigation.navigate("History");
+  };
 
   return (
     <Screen
@@ -67,9 +83,9 @@ const FilterAbsen = ({ navigation }) => {
           as={MaterialIcons}
           name="filter-list"
           type="primary"
-          onPress={() => {}}
+          onPress={setFilterHandler}
           isDisabled={!formState.formIsValid}
-          // isLoading={loading}
+          isLoading={loading}
           isLoadingText="Loading.."
         >
           Filter Absen

@@ -1,6 +1,7 @@
 export const FETCH_SCANNED_QR = "FETCH_SCANNED_QR";
 export const FETCH_CURRABSEN = "FETCH_CURRABSEN";
 export const FETCH_ABSENS = "FETCH_ABSENS";
+export const FILTER_ABSEN = "FILTER_ABSEN";
 
 import axios from "../../axios/default";
 import { Absen } from "../../constants/endpoint";

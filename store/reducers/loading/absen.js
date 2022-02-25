@@ -7,6 +7,8 @@ const initialState = {
   currAbsenSuccess: false,
   absensLoading: false,
   absensSuccess: false,
+  filterLoading: false,
+  filterSuccess: false,
   error: null,
 };
 
@@ -51,6 +53,18 @@ export default reducer = (state = initialState, action) => {
       return updateObject(state, {
         absensLoading: false,
         absensSuccess: true,
+      });
+    //@setFilter
+    case "FILTER_START":
+      return updateObject(state, {
+        filterLoading: true,
+        filterSuccess: false,
+        error: null,
+      });
+    case "FILTER_SUCCESS":
+      return updateObject(state, {
+        filterLoading: false,
+        filterSuccess: true,
       });
     //@Handle Error
     case "ABSEN_ERROR":

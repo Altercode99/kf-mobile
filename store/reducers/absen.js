@@ -2,6 +2,7 @@ import {
   FETCH_SCANNED_QR,
   FETCH_CURRABSEN,
   FETCH_ABSENS,
+  FILTER_ABSEN,
 } from "../actions/absen";
 import { updateObject } from "../../utils/utility";
 
@@ -9,6 +10,7 @@ const initialState = {
   qrScanned: null,
   currentAbsen: null,
   absens: null,
+  filter: null,
 };
 
 export default reducer = (state = initialState, action) => {
@@ -21,6 +23,8 @@ export default reducer = (state = initialState, action) => {
       return resetCurrentAbsen(state, action);
     case FETCH_ABSENS:
       return fetchAbsens(state, action);
+    case FILTER_ABSEN:
+      return setFilter(state, action);
     default:
       return state;
   }
@@ -64,5 +68,14 @@ const resetCurrentAbsen = (state, action) => {
 const fetchAbsens = (state, action) => {
   return updateObject(state, {
     absens: action.absens,
+  });
+};
+
+const setFilter = (state, action) => {
+  return updateObject(state, {
+    filter: {
+      month: action.month,
+      year: action.year,
+    },
   });
 };

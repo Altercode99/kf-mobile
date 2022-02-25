@@ -25,8 +25,12 @@ const ScannerScreen = ({ navigation }) => {
   return (
     <>
       <StatusBar hidden />
-      <View flex={1}>
-        <BarcodeScanner scanned={qrScanned} onScanned={onScannedHandler}>
+      <View w="100%" h="100%">
+        <BarcodeScanner
+          flex={1}
+          scanned={qrScanned}
+          onScanned={onScannedHandler}
+        >
           <View
             w="100%"
             h={65}

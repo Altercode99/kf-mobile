@@ -10,20 +10,28 @@ import ActivityIndicator from "../../components/UI/ActivityIndicator";
 import FilterIcon from "../../assets/icons/filter_list.png";
 
 import { getAbsens } from "../../store/actions/absen";
-import { uuid } from "../../utils/utility";
+import { uuid, getMonth } from "../../utils/utility";
 
 const History = ({ navigation }) => {
   const dispatch = useDispatch();
+  const filter = useSelector((state) => state.absen.filter);
   const absens = useSelector((state) => state.absen.absens);
   const loading = useSelector((state) => state.absenLoader.absensLoading);
 
   const getAbsensHandler = () => {
-    dispatch(getAbsens("02", "2022"));
+    if (filter) {
+      dispatch(getAbsens(filter.month, filter.year));
+    } else {
+      let date = new Date();
+      let month = getMonth(date.getMonth());
+      let year = date.getFullYear();
+      dispatch(getAbsens(month, year));
+    }
   };
 
   useEffect(() => {
     getAbsensHandler();
-  }, []);
+  }, [filter]);
 
   let absen = (
     <Center flex={1}>
