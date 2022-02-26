@@ -11,6 +11,8 @@ import {
 } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 
+import { uuid } from "../../utils/utility";
+
 import * as colors from "../../constants/color";
 
 const inputReducer = (state, action) => {
@@ -37,7 +39,6 @@ export default InputGenerator = (props) => {
   const [error, setError] = useState();
 
   const iconColor = useColorModeValue(colors.light.border, colors.dark.border);
-  const selectBg = useColorModeValue(colors.light.body, colors.dark.card);
 
   const focusColor = useColorModeValue(
     colors.light.primary,
@@ -144,7 +145,7 @@ export default InputGenerator = (props) => {
               <Select.Item
                 label={option.label}
                 value={option.value}
-                key={option.value}
+                key={uuid()}
               />
             ))}
         </Select>
@@ -172,7 +173,7 @@ export default InputGenerator = (props) => {
               <Select.Item
                 label={option.label}
                 value={option.value}
-                key={option.value}
+                key={uuid()}
               />
             ))}
         </Select>

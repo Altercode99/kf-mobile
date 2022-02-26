@@ -4,13 +4,17 @@ import {
   FETCH_ABSENS,
   FILTER_ABSEN,
 } from "../actions/absen";
-import { updateObject } from "../../utils/utility";
+import { updateObject, getMonth } from "../../utils/utility";
+
+let date = new Date();
+let month = getMonth(date.getMonth());
+let year = date.getFullYear();
 
 const initialState = {
   qrScanned: null,
   currentAbsen: null,
   absens: null,
-  filter: null,
+  filter: { month, year: "" + year },
 };
 
 export default reducer = (state = initialState, action) => {

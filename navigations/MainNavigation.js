@@ -7,10 +7,13 @@ import { FontAwesome } from "@expo/vector-icons";
 import StartupScreen from "../screens/Startup";
 import LoginScreen from "../screens/Auth/Login";
 import HomeScreen from "../screens/Home";
+import ProfileScreen from "../screens/Profile";
 import AbsenScreen from "../screens/Absen/Absen";
 import ScannerScreen from "../screens/Absen/Scanner";
 import HistoryAbsenScreen from "../screens/Absen/History";
 import FilterAbsenScreen from "../screens/Absen/FilterAbsen";
+import BusinessTripScreen from "../screens/BusinessTrip/BusinessTrip";
+import MeetingRoomScreen from "../screens/MeetingRoom/MeetingRoom";
 
 import TabbarIcon from "../components/UI/TabbarIcon";
 import TabbarLabel from "../components/UI/TabbarLabel";
@@ -69,6 +72,9 @@ const AbsensiNavigation = createMaterialBottomTabNavigator(
 const AppNavigator = createStackNavigator(
   {
     Home: HomeScreen,
+    Profile: ProfileScreen,
+    BusinessTrip: BusinessTripScreen,
+    MeetingRoom: MeetingRoomScreen,
   },
   {
     defaultNavigationOptions: defaultNavOptions,

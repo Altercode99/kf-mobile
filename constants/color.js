@@ -15,9 +15,9 @@ export const light = {
   btnLoading: "#2f69af",
   btnSecondary: "#db2777",
   btnSecondaryLoading: "#f472b6",
+  pressed: "#ccc",
 
   border: "#565454",
-  pressed: "#ccc",
   placeholderTextColor: "#ccc",
 };
 
@@ -37,11 +37,11 @@ export const dark = {
   textBottomTab: "#f39200",
   header: "#292524", //warmGray.500
   body: "#1c1917", //warmGray.900
-  btnLoading: "#a8a29e",
+  btnLoading: "#a8a29e", //warmGray.400
   btnSecondary: "#db2777",
   btnSecondaryLoading: "#f472b6",
+  pressed: "#292524", //warmGray.800
 
   border: "#565454",
-  pressed: "#ccc",
   placeholderTextColor: "#ccc",
 };

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FlatList } from "react-native";
-import { View, Image, Pressable, Center } from "native-base";
+import { View, Image, Pressable, Center, Text } from "native-base";
 import { withNavigationFocus } from "react-navigation";
 
 import Screen from "../../components/View/Screen1";
@@ -10,7 +10,7 @@ import ActivityIndicator from "../../components/UI/ActivityIndicator";
 import FilterIcon from "../../assets/icons/filter_list.png";
 
 import { getAbsens } from "../../store/actions/absen";
-import { uuid, getMonth } from "../../utils/utility";
+import { uuid, toMonth } from "../../utils/utility";
 
 const History = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -19,14 +19,7 @@ const History = ({ navigation }) => {
   const loading = useSelector((state) => state.absenLoader.absensLoading);
 
   const getAbsensHandler = () => {
-    if (filter) {
-      dispatch(getAbsens(filter.month, filter.year));
-    } else {
-      let date = new Date();
-      let month = getMonth(date.getMonth());
-      let year = date.getFullYear();
-      dispatch(getAbsens(month, year));
-    }
+    dispatch(getAbsens(filter.month, filter.year));
   };
 
   useEffect(() => {
@@ -39,7 +32,7 @@ const History = ({ navigation }) => {
     </Center>
   );
 
-  if (!loading && absens) {
+  if (!loading && absens && absens.length > 0) {
     absen = (
       <View
         style={{
@@ -60,6 +53,12 @@ const History = ({ navigation }) => {
         />
       </View>
     );
+  } else if (!loading && absens && absens.length == 0) {
+    absen = (
+      <Center flex={1}>
+        <Text>Tidak ada riwayat absen!</Text>
+      </Center>
+    );
   }
 
   return (
@@ -76,6 +75,12 @@ const History = ({ navigation }) => {
           justifyContent="flex-end"
           alignItems="center"
         >
+          <View>
+            <Text>{toMonth(filter.month)}</Text>
+          </View>
+          <View>
+            <Text> {filter.year}</Text>
+          </View>
           <Pressable
             w={45}
             h={45}

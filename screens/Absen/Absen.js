@@ -10,6 +10,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { SimpleLineIcons, Entypo, MaterialIcons } from "@expo/vector-icons";
 import { withNavigationFocus } from "react-navigation";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import { Alert } from "react-native";
 
 import Screen from "../../components/View/Screen1";
 import ActivityIndicator from "../../components/UI/ActivityIndicator";
@@ -31,6 +33,17 @@ const Absen = ({ navigation }) => {
 
   const resetAbsenHandler = () => {
     dispatch({ type: "CURRABSEN_RESET" });
+  };
+
+  const absenInHandler = async () => {
+    const { status } = await BarCodeScanner.requestPermissionsAsync();
+    if (status === "granted") {
+      navigation.navigate("Scanner", { action: "IN" });
+    } else {
+      Alert.alert("Aplikasi membutuhkan izin kamera untuk melakukan absensi!", [
+        { text: "Tutup" },
+      ]);
+    }
   };
 
   useEffect(() => {
@@ -56,7 +69,7 @@ const Absen = ({ navigation }) => {
             as={Entypo}
             name="login"
             type="primary"
-            onPress={() => navigation.navigate("Scanner", { action: "IN" })}
+            onPress={absenInHandler}
           >
             Absen Masuk
           </ButtonIcon>
@@ -94,7 +107,7 @@ const Absen = ({ navigation }) => {
               </>
             )}
           </View>
-          <View flex={1} overflow="hidden">
+          <View flex={1} overflow="hidden" mt={3}>
             <View
               w="100%"
               alignItems="center"

@@ -15,6 +15,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import StatusBar from "../../components/UI/StatusBar";
 import FrontIcon from "../../assets/icons/front_kf.jpeg";
 import BumnIcon from "../../assets/icons/bumn_stroke.png";
+import FlowerIcon from "../../assets/icons/flower_kf.png";
 
 import * as colors from "../../constants/color";
 
@@ -48,7 +49,8 @@ const Screen1 = ({ title, back, children }) => {
     colors.light.secondary,
     colors.dark.secondary
   );
-
+  const bodyColor = useColorModeValue("#ecfeff", colors.dark.body);
+  const pressedColor = useColorModeValue("#ea580c", colors.dark.body);
   return (
     <>
       <StatusBar />
@@ -108,8 +110,10 @@ const Screen1 = ({ title, back, children }) => {
             }
             onPress={back}
             _pressed={{
-              backgroundColor: "transparent",
+              backgroundColor: "#ddd",
             }}
+            borderRadius={50}
+            m={1}
           />
         </View>
       </View>
@@ -118,7 +122,7 @@ const Screen1 = ({ title, back, children }) => {
         w="100%"
         h={HEIGHT - 65}
         style={{
-          backgroundColor: "#fff",
+          backgroundColor: bodyColor,
           borderTopLeftRadius: 45,
           borderLeftWidth: 1,
           borderTopWidth: 1,
@@ -133,7 +137,9 @@ const Screen1 = ({ title, back, children }) => {
             top: 0,
             width: "100%",
             height: "100%",
-            borderTopLeftRadius: 45,
+            borderTopLeftRadius: 400,
+            opacity: 0.8,
+            right: -1,
           }}
         ></LinearGradient>
         <View
@@ -152,6 +158,19 @@ const Screen1 = ({ title, back, children }) => {
           <Text>{title}</Text>
         </View>
         {children}
+        <View
+          w="100%"
+          h={150}
+          style={{
+            position: "absolute",
+            bottom: 82,
+            right: -50,
+            opacity: 0.1,
+            zIndex: -1,
+          }}
+        >
+          <Image source={FlowerIcon} alt="FlowerIcon" w="100%" h="100%" />
+        </View>
       </View>
     </>
   );

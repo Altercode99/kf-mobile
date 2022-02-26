@@ -9,10 +9,11 @@ import {
   useColorMode,
   useColorModeValue,
   Text,
+  Pressable,
 } from "native-base";
+import { useSelector } from "react-redux";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Dimensions } from "react-native";
-import { useDispatch } from "react-redux";
 
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -23,15 +24,14 @@ import MapIcon from "../assets/icons/maps_marker.png";
 import MeetingRoomIcon from "../assets/icons/meeting_room.png";
 import BumnIcon from "../assets/icons/bumn_stroke.png";
 import FrontIcon from "../assets/icons/front_kf.jpeg";
-import SloganIcon from "../assets/icons/go_fast.png";
+import FlowerIcon from "../assets/icons/flower_kf.png";
 
-import { logout } from "../store/actions/auth";
 import * as colors from "../constants/color";
 
 const HEIGHT = Dimensions.get("window").height;
 
 const Home = ({ navigation }) => {
-  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
   const { colorMode, toggleColorMode } = useColorMode();
 
   const gradient1 = useColorModeValue(
@@ -59,12 +59,7 @@ const Home = ({ navigation }) => {
     colors.light.secondary,
     colors.dark.secondary
   );
-
-  const exit = () => {
-    setTimeout(() => {
-      dispatch(logout());
-    }, 1000);
-  };
+  const bodyColor = useColorModeValue("#ecfeff", colors.dark.body);
 
   return (
     <>
@@ -96,11 +91,50 @@ const Home = ({ navigation }) => {
             width: "100%",
             display: "flex",
             flexDirection: "row",
-            justifyContent: "flex-end",
+            justifyContent: "space-between",
+            alignItems: "center",
             marginBottom: 30,
           }}
         >
-          <Image source={BumnIcon} alt="Absen" w="50%" h={35} />
+          <View
+            display="flex"
+            flexDirection="column"
+            justifyContent="flex-start"
+            alignItems="center"
+          >
+            <View
+              w={70}
+              h={70}
+              bg={colors.light.secondary}
+              borderRadius={35}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Image
+                source={FrontIcon}
+                alt="FrontIcon"
+                w={66}
+                h={66}
+                borderRadius={33}
+              />
+            </View>
+            <Pressable
+              w={75}
+              h={15}
+              bg={colors.light.secondary}
+              _pressed={{
+                bg: "#ea580c",
+              }}
+              borderRadius={10}
+              justifyContent="center"
+              alignItems="center"
+              style={{ marginTop: -10, elevation: 1 }}
+              onPress={() => navigation.navigate("Profile")}
+            >
+              <Text fontSize={10}>Profile</Text>
+            </Pressable>
+          </View>
+          <Image source={BumnIcon} alt="BumnIcon" w="50%" h={35} />
         </View>
 
         <View
@@ -125,8 +159,10 @@ const Home = ({ navigation }) => {
             }
             onPress={toggleColorMode}
             _pressed={{
-              backgroundColor: "transparent",
+              backgroundColor: "#ddd",
             }}
+            borderRadius={50}
+            m={1}
           />
         </View>
       </View>
@@ -135,7 +171,7 @@ const Home = ({ navigation }) => {
         w="100%"
         h={HEIGHT * 0.75}
         style={{
-          backgroundColor: "#fff",
+          backgroundColor: bodyColor,
           borderTopLeftRadius: 45,
           borderLeftWidth: 1,
           borderTopWidth: 1,
@@ -147,10 +183,12 @@ const Home = ({ navigation }) => {
           colors={[gradient1, gradient2]}
           style={{
             position: "absolute",
-            top: 0,
+            top: 20,
             width: "100%",
             height: "100%",
-            borderTopLeftRadius: 45,
+            borderTopLeftRadius: 400,
+            opacity: 0.8,
+            right: -1,
           }}
         ></LinearGradient>
         <View
@@ -164,7 +202,14 @@ const Home = ({ navigation }) => {
           }}
           px={5}
         >
-          <Text>S.P.E.K.T.A</Text>
+          <View>
+            <Text>
+              Selamat Datang{" "}
+              <Text bold color={colors.light.secondary}>
+                {user.empName}
+              </Text>
+            </Text>
+          </View>
         </View>
         <ScrollView w="100%" mt={10} px={5}>
           <HStack w="100%" h={110} space={3} justifyContent="center" pt={1}>
@@ -173,22 +218,31 @@ const Home = ({ navigation }) => {
               icon={ClockIcon}
               title="Absensi"
             />
-
             <HomeMenuCard
-              onPress={() => {
-                console.log("Perjalanan Dinas");
-              }}
+              onPress={() => navigation.navigate("BusinessTrip")}
               icon={MapIcon}
               title="Perjalanan Dinas"
             />
-
             <HomeMenuCard
-              onPress={exit}
+              onPress={() => navigation.navigate("MeetingRoom")}
               icon={MeetingRoomIcon}
               title="Ruang Meeting"
             />
           </HStack>
         </ScrollView>
+        <View
+          w="100%"
+          h={150}
+          style={{
+            position: "absolute",
+            bottom: 10,
+            right: -50,
+            opacity: 0.1,
+            zIndex: -1,
+          }}
+        >
+          <Image source={FlowerIcon} alt="FlowerIcon" w="100%" h="100%" />
+        </View>
       </View>
     </>
   );

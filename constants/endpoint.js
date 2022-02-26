@@ -1,6 +1,6 @@
-const url = "http://10.9.115.10:8000";
+// const url = "http://10.9.115.10:8000";
 // const url = "http://192.168.43.152:5000";
-// const url = "https://spekta.id";
+const url = "https://spekta.id";
 export const baseURL = `${url}/index.php`;
 
 export const Auth = (method, params) => {

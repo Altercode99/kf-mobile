@@ -15,16 +15,17 @@ import { FORM_UPDATE, formReducer } from "../../utils/formReducer";
 const FilterAbsen = ({ navigation }) => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.absenLoader.filterLoading);
+  const filter = useSelector((state) => state.absen.filter);
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
-      year: null,
-      month: null,
+      year: filter.year,
+      month: filter.month,
     },
     inputValidities: {
-      year: false,
-      month: false,
+      year: true,
+      month: true,
     },
-    formIsValid: false,
+    formIsValid: true,
   });
 
   const inputChangeHandler = useCallback(
@@ -73,8 +74,8 @@ const FilterAbsen = ({ navigation }) => {
           inputType="select-year"
           isRequired={true}
           onInputChange={inputChangeHandler}
-          initialValue={formState.inputValues.month}
-          placeholder="Pilih Bulan"
+          initialValue={formState.inputValues.year}
+          placeholder="Pilih Tahun"
           required
         />
 
