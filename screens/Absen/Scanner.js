@@ -33,7 +33,7 @@ const ScannerScreen = ({ navigation }) => {
         >
           <View
             w="100%"
-            h={65}
+            h={75}
             style={{
               position: "absolute",
               top: 0,
@@ -59,8 +59,9 @@ const ScannerScreen = ({ navigation }) => {
                 }
                 onPress={() => navigation.navigate("Absen")}
                 _pressed={{
-                  backgroundColor: "transparent",
+                  backgroundColor: "#ccc",
                 }}
+                borderRadius={50}
               />
 
               <Text color={colors.light.secondary}>Scan QR Code</Text>

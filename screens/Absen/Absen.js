@@ -199,7 +199,11 @@ const Absen = ({ navigation }) => {
   }
 
   return (
-    <Screen title="Absen" back={() => navigation.navigate("Home")}>
+    <Screen
+      title="Absen"
+      back={() => navigation.navigate("Home")}
+      fromBottom={50}
+    >
       {absen}
     </Screen>
   );

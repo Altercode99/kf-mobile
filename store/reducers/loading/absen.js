@@ -9,7 +9,6 @@ const initialState = {
   absensSuccess: false,
   filterLoading: false,
   filterSuccess: false,
-  error: null,
 };
 
 export default reducer = (state = initialState, action) => {
@@ -19,60 +18,57 @@ export default reducer = (state = initialState, action) => {
       return updateObject(state, {
         qrLoading: true,
         qrSuccess: false,
-        error: null,
       });
     case "QR_SCAN_SUCCESS":
       return updateObject(state, {
         qrLoading: false,
         qrSuccess: true,
       });
+    case "QR_SCAN_ERROR":
+      return updateObject(state, {
+        qrLoading: false,
+      });
     //@getCurrentAbsen
     case "CURRABSEN_START":
       return updateObject(state, {
         currAbsenLoading: true,
         currAbsenSuccess: false,
-        error: null,
       });
     case "CURRABSEN_SUCCESS":
       return updateObject(state, {
         currAbsenLoading: false,
         currAbsenSuccess: true,
       });
-    case "CURRABSEN_RESET":
+    case "CURRABSEN_ERROR":
       return updateObject(state, {
-        error: null,
+        currAbsenLoading: false,
       });
     //@getAbsens
     case "ABSENS_START":
       return updateObject(state, {
         absensLoading: true,
         absensSuccess: false,
-        error: null,
       });
     case "ABSENS_SUCCESS":
       return updateObject(state, {
         absensLoading: false,
         absensSuccess: true,
       });
+    case "ABSENS_ERROR":
+      return updateObject(state, {
+        absensLoading: false,
+      });
     //@setFilter
     case "FILTER_START":
       return updateObject(state, {
         filterLoading: true,
         filterSuccess: false,
-        error: null,
       });
     case "FILTER_SUCCESS":
       return updateObject(state, {
         filterLoading: false,
         filterSuccess: true,
       });
-    //@Handle Error
-    case "ABSEN_ERROR":
-      return updateObject(state, {
-        qrLoading: false,
-        error: action.error,
-      });
-
     default:
       return state;
   }

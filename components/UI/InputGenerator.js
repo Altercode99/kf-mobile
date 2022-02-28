@@ -145,7 +145,7 @@ export default InputGenerator = (props) => {
               <Select.Item
                 label={option.label}
                 value={option.value}
-                key={uuid()}
+                key={uuid() + option.value}
               />
             ))}
         </Select>
@@ -173,7 +173,7 @@ export default InputGenerator = (props) => {
               <Select.Item
                 label={option.label}
                 value={option.value}
-                key={uuid()}
+                key={uuid() + option.value}
               />
             ))}
         </Select>

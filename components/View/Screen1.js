@@ -21,7 +21,7 @@ import * as colors from "../../constants/color";
 
 const HEIGHT = Dimensions.get("window").height;
 
-const Screen1 = ({ title, back, children }) => {
+const Screen1 = ({ title, back, fromBottom, children }) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   const gradient1 = useColorModeValue(
@@ -120,7 +120,7 @@ const Screen1 = ({ title, back, children }) => {
 
       <View
         w="100%"
-        h={HEIGHT - 65}
+        h={HEIGHT - (65 + 40 - 15)}
         style={{
           backgroundColor: bodyColor,
           borderTopLeftRadius: 45,
@@ -163,7 +163,7 @@ const Screen1 = ({ title, back, children }) => {
           h={150}
           style={{
             position: "absolute",
-            bottom: 82,
+            bottom: fromBottom ? fromBottom : 0,
             right: -50,
             opacity: 0.1,
             zIndex: -1,

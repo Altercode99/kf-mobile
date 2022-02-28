@@ -1,25 +1,25 @@
 import { updateObject } from "../../../utils/utility";
 
 const initialState = {
-  loginLoading: false,
-  loginSuccess: false,
+  profileLoading: false,
+  profileSuccess: false,
 };
 
 export default reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "LOGIN_START":
+    case "PROFILE_START":
       return updateObject(state, {
-        loginLoading: true,
-        loginSuccess: false,
+        profileLoading: true,
+        profileSuccess: false,
       });
-    case "LOGIN_SUCCESS":
+    case "PROFILE_SUCCESS":
       return updateObject(state, {
-        loginLoading: false,
-        loginSuccess: true,
+        profileLoading: false,
+        profileSuccess: true,
       });
-    case "LOGIN_ERROR":
+    case "PROFILE_ERROR":
       return updateObject(state, {
-        loginLoading: false,
+        profileLoading: false,
       });
     default:
       return state;

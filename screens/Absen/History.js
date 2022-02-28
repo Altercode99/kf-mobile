@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FlatList } from "react-native";
+import { FlatList, Dimensions } from "react-native";
 import { View, Image, Pressable, Center, Text } from "native-base";
 import { withNavigationFocus } from "react-navigation";
 
@@ -11,6 +11,8 @@ import FilterIcon from "../../assets/icons/filter_list.png";
 
 import { getAbsens } from "../../store/actions/absen";
 import { uuid, toMonth } from "../../utils/utility";
+
+const HEIGHT = Dimensions.get("window").height;
 
 const History = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -37,20 +39,23 @@ const History = ({ navigation }) => {
       <View
         style={{
           width: "100%",
-          height: "75%",
+          height: HEIGHT - (155 + 60),
         }}
+        pt={1}
         px={2}
       >
-        <FlatList
-          flex={1}
-          keyExtractor={(item) => uuid()}
-          onRefresh={getAbsensHandler}
-          refreshing={loading}
-          data={absens}
-          renderItem={({ item, index }) => (
-            <AbsenHistoryCard index={index} item={item} />
-          )}
-        />
+        <View w="100%" h="100%" borderRadius={10} overflow="hidden">
+          <FlatList
+            flex={1}
+            keyExtractor={(item) => uuid()}
+            onRefresh={getAbsensHandler}
+            refreshing={loading}
+            data={absens}
+            renderItem={({ item, index }) => (
+              <AbsenHistoryCard index={index} item={item} />
+            )}
+          />
+        </View>
       </View>
     );
   } else if (!loading && absens && absens.length == 0) {
@@ -62,7 +67,11 @@ const History = ({ navigation }) => {
   }
 
   return (
-    <Screen title="Riwayat Absen" back={() => navigation.navigate("Home")}>
+    <Screen
+      title="Riwayat Absen"
+      back={() => navigation.navigate("Home")}
+      fromBottom={50}
+    >
       <View alignItems="center">
         <View
           w="90%"
@@ -85,6 +94,11 @@ const History = ({ navigation }) => {
             w={45}
             h={45}
             onPress={() => navigation.navigate("FilterAbsen")}
+            _pressed={{
+              backgroundColor: "#ddd",
+              borderRadius: 5,
+            }}
+            ml={1}
           >
             <Image source={FilterIcon} alt="Filter" w={45} h={45} />
           </Pressable>

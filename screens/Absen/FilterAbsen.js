@@ -55,6 +55,7 @@ const FilterAbsen = ({ navigation }) => {
     <Screen
       title="Filter Riwayat Absen"
       back={() => navigation.navigate("History")}
+      fromBottom={50}
     >
       <View w="100%" h="90%" p={5} mt={5}>
         <Input

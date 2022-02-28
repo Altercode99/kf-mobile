@@ -1,20 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
 const CustomScanner = ({ onScanned, scanned, children }) => {
-  const [hasPermission, setHasPermission] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
-  }, []);
-
-  if (hasPermission === false) {
-    alert("Tidak ada izin penggunaan kamera");
-  }
-
   return (
     <BarCodeScanner
       barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}

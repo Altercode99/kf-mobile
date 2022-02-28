@@ -5,7 +5,6 @@ export const FILTER_ABSEN = "FILTER_ABSEN";
 
 import axios from "../../axios/default";
 import { Absen } from "../../constants/endpoint";
-import alertHandler from "../../utils/alertHandler";
 import * as NavigationServices from "../../services/NavigationServices";
 
 const config = {
@@ -31,8 +30,12 @@ export const scanning = (qrScanned, action) => async (dispatch) => {
     dispatch({ type: "QR_SCAN_SUCCESS" });
     NavigationServices.navigate("Absen");
   } catch (err) {
-    alertHandler("Terjadi Kesalahan!", err.response.data.error);
-    dispatch({ type: "ABSEN_ERROR", error: err.response.data.error });
+    dispatch({
+      type: "SET_ERROR",
+      title: "Terjadi Kesalahan!",
+      message: err.response.data.error,
+    });
+    dispatch({ type: "QR_SCAN_ERROR" });
   }
 };
 
@@ -50,8 +53,12 @@ export const getCurrentAbsen = () => async (dispatch) => {
     }
     dispatch({ type: "CURRABSEN_SUCCESS" });
   } catch (err) {
-    alertHandler("Terjadi Kesalahan!", err.response.data.error);
-    dispatch({ type: "ABSEN_ERROR", error: err.response.data.error });
+    dispatch({
+      type: "SET_ERROR",
+      title: "Terjadi Kesalahan!",
+      message: err.response.data.error,
+    });
+    dispatch({ type: "CURRABSEN_ERROR" });
   }
 };
 
@@ -67,7 +74,11 @@ export const getAbsens = (month, year) => async (dispatch) => {
     });
     dispatch({ type: "ABSENS_SUCCESS" });
   } catch (err) {
-    alertHandler("Terjadi Kesalahan!", err.response.data.error);
-    dispatch({ type: "ABSEN_ERROR", error: err.response.data.error });
+    dispatch({
+      type: "SET_ERROR",
+      title: "Terjadi Kesalahan!",
+      message: err.response.data.error,
+    });
+    dispatch({ type: "ABSENS_ERROR" });
   }
 };

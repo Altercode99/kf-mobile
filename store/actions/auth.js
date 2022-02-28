@@ -9,7 +9,6 @@ import {
 
 import axios from "../../axios/default";
 import { Auth } from "../../constants/endpoint";
-import alertHandler from "../../utils/alertHandler";
 import * as NavigationServices from "../../services/NavigationServices";
 
 const config = {
@@ -25,7 +24,7 @@ export const login = (username, password) => async (dispatch) => {
   };
 
   try {
-    dispatch({ type: "LOGIN_LOADING_START" });
+    dispatch({ type: "LOGIN_START" });
     const req = await axios.post(Auth("login"), data, config);
     await saveDataToStorage("@user", {
       token: req.data.token,
@@ -37,11 +36,15 @@ export const login = (username, password) => async (dispatch) => {
       token: req.data.token,
       user: req.data.user,
     });
-    dispatch({ type: "LOGIN_LOADING_SUCCESS" });
+    dispatch({ type: "LOGIN_SUCCESS" });
     NavigationServices.navigate("Home");
   } catch (err) {
-    alertHandler("Terjadi Kesalahan!", err.response.data.error);
-    dispatch({ type: "LOGIN_ERROR", error: err.response.data.error });
+    dispatch({
+      type: "SET_ERROR",
+      title: "Terjadi Kesalahan!",
+      message: err.response.data.error,
+    });
+    dispatch({ type: "LOGIN_ERROR" });
   }
 };
 
@@ -62,8 +65,8 @@ export const checkState = () => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-  await removeDataFromStorage("@user");
   delete axios.defaults.headers.common["authorization"];
-  dispatch({ type: LOGOUT });
+  await removeDataFromStorage("@user");
   NavigationServices.navigate("Login");
+  dispatch({ type: LOGOUT });
 };
